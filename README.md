@@ -30,3 +30,19 @@ A simple multilingual To-Do list application built with **ASP.NET Core MVC** and
 - Bootstrap (optional for UI)
 
 ---
+
+## ⚙️ Setup Instructions
+
+### 1. Clone the Repository, Restore Dependencies, Apply Migrations and Update Database, Run the App
+
+```bash
+git clone https://github.com/Xolani-Dev99/ToDoApp.git
+cd ToDoApp
+
+dotnet restore
+
+dotnet ef database update
+
+dotnet run
+
+
