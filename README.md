@@ -16,7 +16,7 @@ A simple multilingual To-Do list application built with **ASP.NET Core MVC** and
 
 ## 📸 Screenshots
 
-![ToDoApp Screenshot](screenshot.png)
+![ToDoApp Screenshot](screenshot.PNG)
 
 
 ---
