@@ -1,0 +1,108 @@
+@model List<ToDoItem>
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-family: Arial, sans-serif;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 12px 15px;
+        text-align: left;
+    }
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    tr.completed td {
+        color: gray;
+        text-decoration: line-through;
+    }
+    button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
+
+<h2>To-Do List</h2>
+
+<form asp-action="Create" method="post" style="margin-bottom: 20px;">
+    <input type="text" name="description" placeholder="New task" required />
+    <select name="language">
+                <option value="es">Spanish (Español)</option>
+                <option value="fr">French (Français)</option>
+                <option value="de">German (Deutsch)</option>
+                <option value="it">Italian (Italiano)</option>
+                <option value="pt">Portuguese (Português)</option>
+                <option value="ru">Russian (Русский)</option>
+                <option value="ja">Japanese (日本語)</option>
+                <option value="zh">Chinese (中文)</option>
+                <option value="ar">Arabic (العربية)</option>
+                <option value="nl">Dutch (Nederlands)</option>
+                <option value="pl">Polish (Polski)</option>
+                <option value="ko">Korean (한국어)</option>
+                <option value="hi">Hindi (हिंदी)</option>
+                <option value="tr">Turkish (Türkçe)</option>
+                <option value="sv">Swedish (Svenska)</option>
+                <option value="da">Danish (Dansk)</option>
+                <option value="no">Norwegian (Norsk)</option>
+                <option value="fi">Finnish (Suomi)</option>
+    </select>
+    <button type="submit">Add</button>
+</form>
+
+<form asp-action="Index" method="get" style="margin-bottom: 20px;">
+    <label for="filter">Filter Tasks:</label>
+    <select name="filter" onchange="this.form.submit()">
+        <option value="all" selected="@(ViewBag.Filter == "all")">All</option>
+        <option value="completed" selected="@(ViewBag.Filter == "completed")">Completed</option>
+        <option value="incomplete" selected="@(ViewBag.Filter == "incomplete")">Incomplete</option>
+    </select>
+</form>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Task Description</th>
+            <th>Translated Description</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="@(item.IsCompleted ? "completed" : "")">
+                <td>@item.Description</td>
+                <td>@item.TranslatedDescription (@item.Language)</td>
+                <td>
+                    @if (!item.IsCompleted)
+                    {
+                        <form asp-action="Complete" method="post" style="margin:0;">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit" onclick="return confirm('Are you sure you want to mark this task as complete?');">
+                              Mark as done
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <span style="color:green; font-weight:bold;">✔ Completed</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
